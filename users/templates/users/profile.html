@@ -420,6 +420,7 @@ return rv;
 		container	">
 
 <form action="{% url 'users:profile' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
     <input type="hidden" name="sessid" id="sessid" value="ced625e2a7e514f81bc8543c247b7609" />
     <div class="profile__settings__wrp">
         <div class="profile__icons">
@@ -431,17 +432,20 @@ return rv;
         <div class="col-md-12">
             <div class="profile__edit">
                 <div class="row">
-                   <div class="col-md-6">
+
+                    <fieldset>
+                    <div class="col-md-6">
+                        <legend> {{ form.gender.label }}</legend>
+                        {% for radio in form.gender %}
                         <div class="profile__form__label">
                             <span class="profile__form__label-text">Пол:<b>*</b></span>
                             <div class="profile__form__radio-wrp">
-                                <label class="profile__form__radio" for="{{ form.gender.id_for_label }}">
-                                    {{ form.gender }}</label>
-
+                                    {{ radio }}
                             </div>
                         </div>
                     </div>
-
+                        {% endfor %}
+                    </fieldset>
                     <div class="col-md-6">
                         <span class="profile__form__label-text">Дата рождения:</span>
                         <select class="profile__form__select" name="BIRTHDAY_DD">
@@ -702,7 +706,7 @@ return rv;
                 <div class="row">
                     <div class="col-md-6">
                         <label class="profile__form__label" for="{{ form.name.id_for_label }}">Имя</label>
-                            {{ form.name }}
+                        {{ form.name }}
                     </div>
                 </div>
                 <div class="row">
