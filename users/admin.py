@@ -1,4 +1,6 @@
 from django.contrib import admin
+from users.models import User, UserAnswer,UserPassedTest
 
-from users.models import User
 admin.site.register(User)
+admin.site.register(UserAnswer)
+admin.site.register(UserPassedTest)

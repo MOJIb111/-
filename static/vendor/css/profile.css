@@ -1,6 +1,113 @@
-body {
-    background-image: url(https://memepedia.ru/wp-content/uploads/2020/02/beda-s-bashkoj-8.jpg);
-    background-size: contain;
-    font-weight: hold;
-    margin: 100px;
-}
+:root {
+            --neon-pink: #ff2ced;
+            --neon-blue: #00f2ff;
+            --neon-yellow: #fff01f;
+            --neon-green: #0aff0a;
+            --dark-purple: #1a0033;
+            --vhs-effect: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 150 -50"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.1"/></svg>');
+        }
+
+        body {
+            background-color: var(--dark-purple);
+            color: white;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            background-image:
+                linear-gradient(45deg, rgba(255, 44, 237, 0.1) 1px, transparent 1px),
+                linear-gradient(-45deg, rgba(0, 242, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--vhs-effect);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .dropdown-item {
+            display: inline-block;
+            padding: 12px 25px;
+            background: black;
+            color: var(--neon-yellow);
+            border: 2px solid var(--neon-yellow);
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .dropdown-item:hover {
+            background: var(--neon-yellow);
+            color: black;
+            box-shadow: 0 0 20px var(--neon-yellow);
+            transform: scale(1.05);
+        }
+
+        /* Контейнер */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 4px solid var(--neon-green);
+            box-shadow: 0 0 20px var(--neon-pink);
+            position: relative;
+        }
+
+        /* Кнопки */
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: black;
+            color: var(--neon-yellow);
+            border: 2px solid var(--neon-yellow);
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: var(--neon-yellow);
+            color: black;
+            box-shadow: 0 0 20px var(--neon-yellow);
+            transform: scale(1.05);
+        }
+
+        /* Для мобилок */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+            .container {
+                padding: 10px;
+                border-width: 2px;
+            }
+        }
+
+        .neon-text {
+            color: #fff;
+            text-shadow:
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px #ff2ced,
+                0 0 40px #ff2ced,
+                0 0 80px #ff2ced;
+            animation: neon-flicker 1.5s infinite alternate;
+        }
+

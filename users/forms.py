@@ -36,10 +36,13 @@ class UserProfileForm(UserChangeForm):
         attrs={'class' : 'profile__form__label'}))
     email = forms.CharField(widget=forms.TextInput(
         attrs={'class' : 'col-md-12', 'readonly' : True}))
-    image = forms.FileField(widget=forms.FileInput(
+    image = forms.ImageField(widget=forms.FileInput(
         attrs={'class' : 'custom-file'}))
     gender = forms.ChoiceField(widget=forms.RadioSelect(), choices=GENDER_CHOICES)
-    date = forms.DateField(widget=forms.SelectDateWidget(years=range(1940, 2080)))
+    date = forms.DateField(widget=forms.SelectDateWidget(
+        years=range(1940, 2080),
+        empty_label=('Год', 'Месяц', 'День')),
+        required=True)
     
     
     class Meta:

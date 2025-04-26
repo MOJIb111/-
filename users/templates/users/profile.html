@@ -1,80 +1,71 @@
+{% extends 'users/base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="ru">
+    {% block css %}
+        <link href="{% static '/vendor/css/profile.css' %}" rel="stylesheet">
+    {% endblock %}
 
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+{% block content %}
+    <div class="tooltip-text">
+        <h2>
+        <a class="tooltip-text__menu-item" href="/user/#my-tests">Мои тесты</a>
+        <a class="tooltip-text__menu-item" href="{% url 'users:logout' %}">Выйти</a>
+        </h2>
+    </div>
 
-    <link href="{% static '/vendor/css/profile.css' %}" rel="stylesheet">
-    <title>{{ title }}</title>
-</head>
-
-
-
-<body class="body">
-<center>
-
-<div class="tooltip-text">
-    <h2>
-    <a class="tooltip-text__menu-item" href="/user/#my-tests">Мои тесты</a>
-    <a class="tooltip-text__menu-item" href="/?logout=yes">Выйти</a>
-    </h2>
-</div>
-
-<form action="{% url 'users:profile' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-
-    <div class="form-row mb-2">
-        <div class="col-lg-12">
-            <div class="custom-file">
-                {{ form.image }}
-                <label class="custom-file-label" for="{{ form.image.id_for_label }}">Выберите изображение</label>
+    <form action="{% url 'users:profile' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <main>
+            <div class="form-row mb-2">
+                <div class="col-lg-12">
+                    <div class="custom-file">
+                        {{ form.image }}
+                        <label class="custom-file-label" for="{{ form.image.id_for_label }}"></label>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <fieldset>
-    <h3><div class="col-md-6">
-        <span class="profile__form__label-text">Пол:<b>*</b></span>
-        {% for radio in form.gender %}
-        <div class="profile__form__label">
-                    {{ radio }}
-        </div>
-        {% endfor %}
-        </div>
-    </div>
-    </h3>
-    </fieldset>
-
-
-    <h3><div class="col-md-6">
-        <span class="profile__form__label-text">Дата рождения:</span>
-        {{ form.date }}
-    </div>
-    </h3>
-
-    <h3><div class="col-md-6">
-        <label class="profile__form__label" for="{{ form.name.id_for_label }}">Имя</label>
-        {{ form.name }}
-    </div>
-    </h3>
-
-    <h3><div class="profile__settings">
-        <div class="row">
-            <div class="profile__settings__email col-md-12">
-            <label class="small mb-1" for="{{ form.email.id_for_label }}">Ваш email</label>
-            {{ form.email }}
+            <fieldset>
+            <h3 class="neon-text"><div class="col-md-6">
+                <span class="profile__form__label-text">Пол:<b>*</b></span>
+                {% for radio in form.gender %}
+                <div class="profile__form__label">
+                            {{ radio }}
+                </div>
+                {% endfor %}
+                </div>
             </div>
-        </div>
-    </div>
-    </h3>
-</form>
+            </h3>
+            </fieldset>
 
-		</div>
-</center>
 
-</body>
+            <h3 class="neon-text"><div class="col-md-6">
+                {{ form.date.lable_tag }}
+                {{ form.date }}
+            </div>
+            </h3>
 
-</html>
+            <h3 class="neon-text"><div class="col-md-6">
+                <label class="profile__form__label" for="{{ form.name.id_for_label }}">Имя</label>
+                {{ form.name }}
+            </div>
+            </h3>
+
+            <h3 class="neon-text><div class="profile__settings">
+                <h3 class="neon-text"> <div class="row">
+                    <div class="profile__settings__email col-md-12">
+                    <label class="small mb-1" for="{{ form.email.id_for_label }}">Ваш email</label>
+                    {{ form.email }}
+                    </div>
+                </div>
+                </h3>
+                <div class="form-row">
+                    <div class="col-lg-12" style="margin-top: 33px;">
+                        <input class="btn btn-info btn-block" type="submit" value="Сохранить">
+                    </div>
+                </div>
+            </div>
+            </h3>
+        </main>
+    </form>
+{% endblock %}

@@ -1,32 +1,17 @@
+{% extends 'tast/base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="ru" prefix="og: http://ogp.me/ns#">
-
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
+{% block css %}
     <link href="{% static '/vendor/css/index.css' %}" rel="stylesheet">
-    <title>Онлайн тесты c точным результатом от психологических до психологических</title>
-</head>
+{% endblock %}
 
+{% block content %}
 
-
-<body class="body">
-<center>
-    <h2>
-        <div class="tooltip-content clearfix">
-            <div class="tooltip-text">
-                <a class="tooltip-text__menu-item" href="{% url 'users:profile' %}">Профиль</a>
-                <a class="tooltip-text__menu-item" href="/user/#my-tests">Тесты</a>
-                <a class="tooltip-text__menu-item" href="{% url 'users:login' %}">Войти</a>
-                <a class="tooltip-text__menu-item" href="/?logout=yes">Выйти</a>
-            </div>
+    <center>
+        <h2 class="neon-text">Езжай с умом</h2>
+        <div class="tooltip-text">
+            <a class="tooltip-text__menu-item" href="{% url 'tast:testicals' %}">Тесты</a>
         </div>
-    </h2>
+    </center>
 
-</center>
-</body>
-
-</html>
+{% endblock %}

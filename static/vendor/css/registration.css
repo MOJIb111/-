@@ -43,6 +43,7 @@
             box-shadow: 0 0 20px var(--neon-pink);
             position: relative;
         }
+
         .dropdown-item {
             display: inline-block;
             padding: 12px 25px;
@@ -97,6 +98,7 @@
                 0 0 80px #ff2ced;
             animation: neon-flicker 1.5s infinite alternate;
         }
+
         /* Для мобилок */
         @media (max-width: 600px) {
             header h1 {
