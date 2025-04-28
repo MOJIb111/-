@@ -16,14 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from tast.views import index, testicals, start_quiz, answer_question, quiz_results
+from tast.views import index, testicals, start_quiz, submit_answer, complete_quiz, quiz_list
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index, name='index'),
-    path('testicals/', include('tast.urls', namespace='tast')),
-    path('start_quiz/', include('tast.urls', namespace='start_quiz')),
-    path('answer_question/', include('tast.urls', namespace='answer_question')),
-    path('quiz_results/', include('tast.urls', namespace='quiz_results')),
+    path('', include('tast.urls')),
     path('users/', include('users.urls', namespace='users'))
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)

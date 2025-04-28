@@ -1,39 +1,61 @@
 from django.db import models
+from users.models import User
+
 
 class Quiz(models.Model):
-    title = models.CharField(max_length=100, verbose_name='Название теста')
-    description = models.TextField(verbose_name='Описание теста', blank=True)
-    created_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    title = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    created_date = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.title
-    
-    class Meta:
-        verbose_name = 'Тест'
-        verbose_name_plural = 'Тесты'
+
 
 class Question(models.Model):
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE,
-    related_name='questions', verbose_name='Тест')
-    text = models.TextField(verbose_name='Текст вопроса')
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='questions')
+    text = models.TextField()
     
     def __str__(self):
-        return f'Вопрос:  {self.quiz[:50]}...'
-    
-    class Meta:
-        verbose_name = 'Вопрос'
-        verbose_name_plural = 'Вопросы'
+        return f'Вопрос: {self.text[:50]}...'
+
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE,
-    related_name='answers', verbose_name='Вопрос')
-    text = models.CharField(max_length=200, verbose_name='Текст ответа')
-    is_correct = models.BooleanField(default=False, verbose_name='Правильный ответ')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
+    image = models.ImageField(upload_to='answers/', blank=True)
+    points = models.PositiveIntegerField(default=1)
+    is_correct = models.BooleanField(default=False)
     
     def __str__(self):
-        return f'Ответ {self.text[:20]}...'
+        return f'Ответ ({self.points} баллов)'
+
+
+class QuizAttempt(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quiz_attempts')
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    started_at = models.DateTimeField(auto_now_add=True)
+    completed_at = models.DateTimeField(null=True, blank=True)
+    total_points = models.PositiveIntegerField(default=0)
     
     class Meta:
-        verbose_name = 'Ответ'
-        verbose_name_plural = 'Ответы'
-        
+        ordering = ['-started_at']
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.quiz.title} ({self.total_points} баллов)"
+
+
+class UserAnswer(models.Model):
+    attempt = models.ForeignKey(QuizAttempt, on_delete=models.CASCADE, related_name='user_answers')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    selected_answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
+    answered_at = models.DateTimeField(auto_now_add=True)
+    earned_points = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        unique_together = ('attempt', 'question')
+    
+    def save(self, *args, **kwargs):
+        self.earned_points = self.selected_answer.points
+        super().save(*args, **kwargs)
+        self.attempt.save()
+    def __str__(self):
+        return f"{self.attempt.user.username}: {self.question.text[:30]}..."
